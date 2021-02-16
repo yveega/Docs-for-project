@@ -1,8 +1,24 @@
+"""
+Модуль, генерирующий задачи по квадратным уравнениям
+
+Использует библиотеки math и random
+Используемые: функция generate
+Баги: в случае, если один из корней равен 0, вывод некорректный
+Работал над модулем: Агеев Николай
+Дата последнего изменения: 16.02.2021
+"""
 import random
 import math
 
 
 def generate():
+    """
+    Функция генерирует квадратные уравнение
+    Входных параметров нет
+    Вывод: 2 строки - уравнение и ответв формате упрощённой формулы
+    Баги: неправильный формат вывода при нулевом корне
+    """
+    # устанавливаем корни
     num_1 = random.randint(-20, 20)
     den_1 = random.randint(1, 3)
     num_1 //= math.gcd(num_1, den_1)
@@ -14,7 +30,7 @@ def generate():
         den_2 = random.randint(1, 3)
     num_2 //= math.gcd(num_2, den_2)
     den_2 //= math.gcd(num_2, den_2)
-
+    # форматируем ответ
     ans_1 = str(num_1) if den_1 == 1 else str(num_1) + " / " + str(den_1)
     if num_1 < 0:
         ans_1 = "- " + ans_1[1:]
@@ -29,10 +45,11 @@ def generate():
     # eq_type = random.randint(1, 3)
     eq_type = 1
     if eq_type == 1:
+        # считаем коеффициенты
         k_square = den_1 * den_2
         k_simple = -den_1 * num_2 - den_2 * num_1
         k_const = num_1 * num_2
-
+        # форматируем выражение
         if k_square == 1:
             equation = "x "
         elif k_square == -1:
@@ -53,6 +70,7 @@ def generate():
             equation += "+ " + str(k_const) + " = 0"
         elif k_const < 0:
             equation += "- " + str(-k_const) + " = 0"
+        # возвращаем ответ
         return equation, answer
 
 
