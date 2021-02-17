@@ -11,8 +11,7 @@ import random
 import math
 from Visualiser import *
 
-drawer = Drawer("text(Квадратные уравнения);" +
-                "numb(макс. знаменатель корней, 01, 20);" +
+drawer = Drawer("numb(макс. знаменатель корней, 01, 20);" +
                 "numb(вероятность совпадения корней в %, 0, 100)")
 
 
@@ -79,9 +78,9 @@ def generate(max_den, p_equal):
         return equation, answer
 
 
-eq, ans = generate()
-print("Уравнение:", eq)
-print("Ответ:", ans)
+# eq, ans = generate()
+# print("Уравнение:", eq)
+# print("Ответ:", ans)
 
 kg = True  # Условие основного цикла программы
 
