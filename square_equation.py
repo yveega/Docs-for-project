@@ -10,9 +10,12 @@
 import random
 import math
 from Visualiser import *
+from tex_v2 import convert
+from export import exp
 
-drawer = Drawer("numb(макс. знаменатель корней, 01, 20);" +
-                "numb(вероятность совпадения корней в %, 0, 100)")
+drawer = Drawer("numb(количество примеров, 01, 10); " +
+                "numb(макс. знаменатель корней, 02, 3); " +
+                "numb(вероятность совпадения корней в %, 03, 50)")
 
 
 def generate(max_den, p_equal):
@@ -55,11 +58,11 @@ def generate(max_den, p_equal):
         k_const = num_1 * num_2
         # форматируем выражение
         if k_square == 1:
-            equation = "x "
+            equation = "x^2 "
         elif k_square == -1:
-            equation = "- x "
+            equation = "- x^2 "
         else:
-            equation = str(k_square) + " x "
+            equation = str(k_square) + " x^2 "
 
         if k_simple == 1:
             equation += "+ x "
@@ -74,6 +77,8 @@ def generate(max_den, p_equal):
             equation += "+ " + str(k_const) + " = 0"
         elif k_const < 0:
             equation += "- " + str(-k_const) + " = 0"
+        else:
+            equation += "= 0"
         # возвращаем ответ
         return equation, answer
 
@@ -93,10 +98,19 @@ while kg:  # ОЦП (Основной Цикл Программы)
         kg = False
     elif res is not None:
         print('Generation parameters -', res)
-        max_den, p_equal_roots = res.split(", ")
+        k_tasks, max_den, p_equal_roots = res.split(", ")
+        k_tasks = int(k_tasks.split(" : ")[1])
         max_den = int(max_den.split(" : ")[1])
         p_equal_roots = int(p_equal_roots.split(" : ")[1])
-        print(generate(max_den, p_equal_roots / 100))
+        tasks = ""
+        for i in range(1, k_tasks + 1):
+            eq, ans = generate(max_den, p_equal_roots / 100)
+            tasks += str(i) + ". \n" + eq + "\nОтвет:  " + ans + "\n"
+        # tasks = tasks[:-1]
+        LaTex = convert(tasks)
+        print(LaTex)
+        print(tasks)
+        exp(LaTex)
 
 
 # Выход из программы
