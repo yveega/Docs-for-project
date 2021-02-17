@@ -9,9 +9,14 @@
 """
 import random
 import math
+from Visualiser import *
+
+drawer = Drawer("text(Квадратные уравнения);" +
+                "numb(макс. знаменатель корней, 01, 20);" +
+                "numb(вероятность совпадения корней в %, 0, 100)")
 
 
-def generate():
+def generate(max_den, p_equal):
     """
     Функция генерирует квадратные уравнение
     Входных параметров нет
@@ -20,14 +25,14 @@ def generate():
     """
     # устанавливаем корни
     num_1 = random.randint(-20, 20)
-    den_1 = random.randint(1, 3)
+    den_1 = random.randint(1, max_den)
     num_1 //= math.gcd(num_1, den_1)
     den_1 //= math.gcd(num_1, den_1)
-    if random.random() > 0.8:
+    if random.random() < p_equal:
         num_2, den_2 = num_1, den_1
     else:
         num_2 = random.randint(-20, 20)
-        den_2 = random.randint(1, 3)
+        den_2 = random.randint(1, max_den)
     num_2 //= math.gcd(num_2, den_2)
     den_2 //= math.gcd(num_2, den_2)
     # форматируем ответ
@@ -77,3 +82,23 @@ def generate():
 eq, ans = generate()
 print("Уравнение:", eq)
 print("Ответ:", ans)
+
+kg = True  # Условие основного цикла программы
+
+
+while kg:  # ОЦП (Основной Цикл Программы)
+    res = drawer.tick()  # Обновление интерфейса и приём команд пользователя. Для пересоздания интерфейса используется функция reset("новый_ввод")
+
+    # Обработка вывода интерфейса
+    if res == 'stop':
+        kg = False
+    elif res is not None:
+        print('Generation parameters -', res)
+        max_den, p_equal_roots = res.split(", ")
+        max_den = int(max_den.split(" : ")[1])
+        p_equal_roots = int(p_equal_roots.split(" : ")[1])
+        print(generate(max_den, p_equal_roots / 100))
+
+
+# Выход из программы
+pygame.quit()
