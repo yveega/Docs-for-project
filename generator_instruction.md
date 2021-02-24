@@ -3,8 +3,8 @@
 Скопируйте следующий код:
 ```python
 from Visualiser import * # Импортируем: окно с параметрами,
-from tex_v2 import convert # конвертер в LaTeX
-from export import exp # и окно экспорта
+from conv import convert # конвертер в LaTeX
+from export import export # и окно экспорта
 
 drawer = Drawer("описание нужных параметров")
 
@@ -25,7 +25,7 @@ while kg:  # ОЦП (Основной Цикл Программы)
     elif res is not None: # res - строка с параметрами
         tasks = generate(res) # Генерируем задачи
         latex_code = convert(tasks) # Преобразуем в LaTeX
-        exp(latex_code) # Вызываем программу экспорта
+        export(latex_code) # Вызываем программу экспорта
 
 
 # Выход из программы
